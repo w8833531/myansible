@@ -2,4 +2,5 @@ This is a test file.Let's go .
 Add a line.
 Add an other line.
 Add three lines.
-
+Add fourth lines.
+Add 1
