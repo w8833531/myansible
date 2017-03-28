@@ -2,10 +2,5 @@ This is a test file.Let's go .
 Add a line.
 Add an other line.
 Add three lines.
-<<<<<<< HEAD
 Add fourth lines.
 Add 1
-Add 2
-=======
-
->>>>>>> parent of 81a3c22... add test.txt 1
