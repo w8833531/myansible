@@ -1,0 +1,4 @@
+---
+
+- include: service.yml
+  when: ansible_service_mgr == 'service'

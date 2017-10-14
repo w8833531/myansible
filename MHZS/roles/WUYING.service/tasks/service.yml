@@ -1,0 +1,8 @@
+---
+
+- name: Service
+  service:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(service_state) }}"
+  with_flattened:
+    - "{{ service_list }}"

@@ -1,0 +1,32 @@
+authorized_key_list_group:
+  - name: root
+    authorized_keys:
+      - key: "{{ lookup('file', '/root/.ssh/node11.pub') }}"
+      - key: "{{ lookup('file', '/root/.ssh/node17.pub') }}"
+      - key: "{{ lookup('file', '/root/.ssh/wuying.pub') }}"
+      - key: "{{ lookup('file', '/root/.ssh/wuying.mobile.pub') }}"
+sshd:
+  ListenAddress: "0.0.0.0"
+  PasswordAuthentication: no
+  ChallengeResponseAuthentication: no
+  GSSAPIAuthentication: no
+  GSSAPICleanupCredentials: no
+  X11Forwarding: no
+
+package_list:
+  - name: mysql-libs-5.1.71-1.el6.x86_64
+    state: absent
+  - name: dmidecode.x86_64
+  - name: wget
+  - name: ntpdate 
+  - name: sysstat
+  - name: lrzsz 
+  - name: mlocate 
+  - name: telnet 
+
+service_list:
+  - name: crond 
+  - name: mysql
+
+timezone: Asia/Shanghai
+

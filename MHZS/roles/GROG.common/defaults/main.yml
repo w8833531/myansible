@@ -1,0 +1,9 @@
+---
+group: yes
+management_user: yes
+debug: yes
+fqdn: yes
+sshd: yes
+timezone: yes
+firewall: yes
+package: yes

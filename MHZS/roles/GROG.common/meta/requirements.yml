@@ -1,0 +1,23 @@
+- src: GROG.group
+  version: v1.1.2
+
+- src: GROG.management-user
+  version: v1.2.7
+
+- src: GROG.debug
+  version: v1.2.3
+
+- src: GROG.fqdn
+  version: v1.0.2
+
+- src: GROG.package
+  version: v1.2.2
+
+- src: willshersystems.sshd
+  version: v0.4.5
+
+- src: yatesr.timezone
+  version: 1.0.0
+
+- src: geerlingguy.firewall
+  version: 1.0.9

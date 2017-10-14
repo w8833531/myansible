@@ -1,0 +1,8 @@
+---
+
+# List of services
+service_list: []
+
+# Packages state
+service_state: started 
+

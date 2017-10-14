@@ -1,0 +1,10 @@
+---
+- hosts: node11
+  tasks:
+    - file: /root/.sshkeys 
+      force: yes
+      state: directory
+      mode: 0700 
+      owner: root
+      group: root
+      when: ansible_os_family  == "Debian"
