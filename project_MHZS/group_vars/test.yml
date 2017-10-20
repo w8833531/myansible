@@ -27,7 +27,16 @@ package_list:
 
 service_list:
   - name: crond 
+  - name: rsyslogd 
   - name: mysql
 
 timezone: Asia/Shanghai
 
+firewall_state: started
+firewall_enabled_at_boot: true
+firewall_allowed_tcp_ports:
+  - "22"
+  - "80"
+firewall_additional_rules:
+  - "iptables -I INPUT -p tcp --dport 5900:5909 -j ACCEPT"
+  - "iptables -I INPUT -p tcp -s 10.0.0.0/8 -j ACCEPT"
