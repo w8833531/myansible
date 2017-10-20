@@ -1,0 +1,8 @@
+- src: GROG.management-user
+  version: v1.2.7
+
+- src: GROG.package
+  version: v1.2.2
+
+- src: GROG.debug-variable
+  version: v1.2.0

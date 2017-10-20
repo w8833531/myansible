@@ -1,0 +1,10 @@
+---
+- hosts: node11
+  tasks:
+    - name: test  command module by > |
+      command: >
+       mkdir -p /tmp/a/aaa
+       mkdir -p /tmp/a/bbb
+       mkdir -p /tmp/a/ccc
+
+      

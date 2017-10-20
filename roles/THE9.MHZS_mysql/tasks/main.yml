@@ -1,0 +1,133 @@
+---
+- name: Make sure rpm dir is available
+  file:
+    path: "{{ rpm_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: rsync {{ rpm_dir }} files 
+  copy:
+    src: "{{ rpm_dir }}"
+    dest: "{{ rpm_dir }}"
+
+- name: Make sure {{ scripts_dir }} is available
+  file:
+    path: "{{ scripts_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: rsync {{ scripts_dir }} files 
+  copy:
+    src: scripts/
+    dest: "{{ scripts_dir }}"
+
+- name: add mysql full backup crontab
+  cron:
+    name: mysql full backup
+    minute: 0
+    hour: 3
+    job: /bin/bash /root/scripts/mysql_backup.sh > /tmp/mysql_backup.log 2>&1 
+
+- name: add mysql binlog backup crontab
+  cron:
+    name: mysql binlog backup
+    minute: "*/30"
+    job: /bin/bash /root/scripts/mysql_backup_binlog.sh > /tmp/mysql_binlog_backup.log 2>&1 
+
+- name: copy configuration file my.cnf.1G to /etc/my.cnf
+  copy: src=my.cnf.1G
+        dest=/etc/my.cnf
+  notify: reload_mysql
+
+- name: delete old configuration file
+  file:
+    path: "/usr/my.cnf"
+    state: absent
+
+- name: remove old  mysql 
+  yum: name={{item}}
+       state=absent
+  with_items:
+    - mysql-libs-5.1.73-8.el6_8.x86_64
+
+- name: install mysql client rpm file
+  yum: name={{ rpm_dir }}{{ mysql_rpm_client }}
+       state=present
+
+- name: install mysql dev rpm file
+  yum: name={{ rpm_dir }}{{ mysql_rpm_dev }}
+       state=present
+
+- name: install mysql server rpm file
+  yum: name={{ rpm_dir }}{{ mysql_rpm_server }}
+       state=present
+
+- name: install mysql shared rpm file
+  yum: name={{ rpm_dir }}{{ mysql_rpm_shared }}
+       state=present
+
+- name: install mysql shared-compat rpm file for mysql-python
+  yum: name={{ rpm_dir }}{{ mysql_rpm_shared_compat }}
+       state=present
+
+- name: Create mysql data dirs
+  file: path={{item}}
+        state=directory
+        owner=mysql
+        group=mysql
+        mode=0755
+  with_items:
+    - /data/mysql/data
+    - /data/mysql/backup/baklogs
+    - /var/lib/mysql
+
+- name: Check that mysql init table is exist
+  stat:
+    path: /data/mysql/data/mysql/
+  register: mysql_init
+
+- name: install mysql db
+  command: /usr/bin/mysql_install_db --user=mysql -ldata=/data/mysql/data
+  when: mysql_init.stat.exists == False
+
+- name: Service enabled and running
+  service:
+    name: "{{ mysql_service }}"
+    enabled: true
+    state: started  
+
+- name: wait for mysql start
+  wait_for:
+    host: 127.0.0.1
+    port: 3306
+    delay: 1 
+
+- name: Set root user password
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+    password: "{{ mysql_root_pass }}"
+    check_implicit_admin: yes
+    login_user: root
+    login_host: localhost
+    login_password: "{{ mysql_root_old_pass }}"
+    state: present
+  with_items:
+    - 127.0.0.1
+    - localhost
+
+- name: add a backup user no password on localhost
+  mysql_user: name=backup
+              host="{{ item }}"
+              priv='*.*:SUPER,SELECT,RELOAD,LOCK TABLES,REPLICATION CLIENT,SHOW VIEW'
+              login_user=root
+              login_password="{{ mysql_root_pass }}"
+              state=present
+  with_items:
+    - 127.0.0.1
+    - localhost
+
