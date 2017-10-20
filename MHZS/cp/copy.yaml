@@ -1,7 +1,0 @@
----
-- hosts: node12
-  tasks:
-    - name: test copy all files in a directory
-      copy: src={{ item }} dest=/root/ansible-tower-bak/ follow=yes
-      with_fileglob:
-        - /root/ansible-tower/*

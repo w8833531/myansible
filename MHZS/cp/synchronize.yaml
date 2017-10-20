@@ -1,5 +1,0 @@
----
-- hosts: node12
-  tasks:
-    - synchronize: src=/root/ansible-tower/ dest=/root/ansible-tower/ delete=yes
-      when:  ansible_os_family  == "Debian"

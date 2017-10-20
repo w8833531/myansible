@@ -1,6 +1,0 @@
----
-
-- name: Dump variables
-  template:
-    src: dumpall.j2
-    dest: "{{ debug_variable_dump_location }}"

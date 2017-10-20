@@ -1,5 +1,0 @@
----
-- name: reload_mysql
-  service:
-    name: "{{ mysql_service }}"
-    state: restarted 
