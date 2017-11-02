@@ -1,7 +1,8 @@
 ---
-- hosts: test 
+- hosts: new 
   roles:
-    - { role: GROG.authorized-key, become: yes, tags；authorized-key }
+    - { role: AerisCloud.ansible_disk, become: yes, tags: disk }    
+    - { role: GROG.authorized-key, become: yes, tags: authorized_key }
     - { role: willshersystems.sshd, become: yes, tags: sshd}
     - { role: yatesr.timezone, become: yes, tags: timezone}
     - { role: GROG.package, become: yes, tags: package }
@@ -9,4 +10,3 @@
     - { role: THE9.MHZS_mysql, become: yes, tags: MHZS_mysql }
     - { role: WUYING.service, become: yes, tags: service }
     - { role: geerlingguy.firewall, become: yes, tags: firewall }
-    
