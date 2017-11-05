@@ -113,7 +113,7 @@
     delay: 1 
 
 - name: Set root user password
-  command: /root/scripts/mysql_ch_root_passwd.sh 
+  command: /root/scripts/mysql_ch_root_passwd.sh {{ mysql_root_pass }} 
 
 - name: add a backup user no password on localhost
   mysql_user: name=backup
