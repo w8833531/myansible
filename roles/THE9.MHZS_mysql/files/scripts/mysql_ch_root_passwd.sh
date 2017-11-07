@@ -3,15 +3,20 @@
 #Usage: change mysql db root password when finished mysql server install
 #Date: 2017-11-3
 
-### read mysql installed password from ~/.mysql_secret
-dbpasswd=`cat ~/.mysql_secret | grep password | awk '{print $18}'`
 
 ### read new mysql password from command line
 new_dbpasswd="'$1'"
 
 ### if no password in command line ,use default password
 if [ -z $new_dbpasswd ];then
-	new_dbpasswd="'Abcd=1234'"
+	new_dbpasswd="'The9!NewPass'"
+fi
+
+### read mysql default installed password from ~/.mysql_secret or use new password
+if [ -f ~/.mysql_secret ]; then
+	dbpasswd=`cat ~/.mysql_secret | grep password | awk '{print $18}'`
+else
+	dbpasswd=${new_dbpasswd}
 fi
 
 ### set root password cmd
@@ -22,4 +27,7 @@ if [ -z $dbpasswd ]; then
 else
 	/usr/bin/mysql -uroot -p$dbpasswd -e "${sql_cmd}"
 fi
-
+### delete mysql default installed password file
+if [ -f ~/.mysql_secret ]; then
+	rm -f ~/.mysql_secret
+fi

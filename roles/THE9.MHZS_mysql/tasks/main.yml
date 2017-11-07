@@ -97,7 +97,7 @@
   register: mysql_init
 
 - name: install mysql db
-  command: /usr/bin/mysql_install_db --user=mysql -ldata=/data/mysql/data
+  command: /usr/bin/mysql_install_db --user=mysql --defaults-file=/etc/my.cnf -ldata=/data/mysql/data
   when: mysql_init.stat.exists == False
 
 - name: Service enabled and running
