@@ -18,6 +18,7 @@ package_list:
   - name: mysql-libs-5.1.71-1.el6.x86_64
     state: absent
   - name: dmidecode.x86_64
+  - name: crontabs 
   - name: wget
   - name: ntpdate 
   - name: sysstat
