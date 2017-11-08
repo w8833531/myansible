@@ -6,6 +6,7 @@
 
 ### read new mysql password from command line
 new_dbpasswd="'$1'"
+old_dbpasswd="$2"
 
 ### if no password in command line ,use default password
 if [ -z $new_dbpasswd ];then
@@ -16,7 +17,7 @@ fi
 if [ -f ~/.mysql_secret ]; then
 	dbpasswd=`cat ~/.mysql_secret | grep password | awk '{print $18}'`
 else
-	dbpasswd=${new_dbpasswd}
+	dbpasswd=${old_dbpasswd}
 fi
 
 ### set root password cmd

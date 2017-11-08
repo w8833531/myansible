@@ -54,6 +54,7 @@ disk_additional_disks:
    user: root 
    group: root 
    disable_periodic_fsck: false
-mysql_root_pass: root_password 
-mysql_gm_pass: gm_password
 
+mysql_root_old_pass:  
+mysql_root_pass: root_passwd
+mysql_gm_pass: gm_passwd
