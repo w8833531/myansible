@@ -1,4 +1,4 @@
 ---
 
-- include: service.yml
+- import_tasks: service.yml
   when: ansible_service_mgr == 'service'

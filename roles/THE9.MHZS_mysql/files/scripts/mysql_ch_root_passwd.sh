@@ -26,7 +26,8 @@ sql_cmd="set password=PASSWORD(${new_dbpasswd}); set password for 'root'@'localh
 if [ -z $dbpasswd ]; then
 	/usr/bin/mysql -uroot  -e "${sql_cmd}"
 else
-	/usr/bin/mysql -uroot -p$dbpasswd -e "${sql_cmd}"
+	/usr/bin/mysqladmin -uroot -p$dbpasswd password ${new_dbpasswd}
+	/usr/bin/mysql -uroot -p${new_dbpasswd} -e "${sql_cmd}"
 fi
 ### delete mysql default installed password file
 if [ -f ~/.mysql_secret ]; then

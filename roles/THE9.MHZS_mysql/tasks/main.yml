@@ -12,11 +12,6 @@
     src: "{{ rpm_dir }}"
     dest: "{{ rpm_dir }}"
 
-- name: delete old configuration file
-  file:
-    path: "/usr/my.cnf"
-    state: absent
-
 - name: delete old mysql rpm file
   file:
     path: "/var/lib/mysql/RPM_UPGRADE_MARKER"
@@ -24,8 +19,11 @@
 
 - name: copy configuration file my.cnf.1G to /etc/my.cnf
   copy: src=my.cnf.1G
-        dest=/etc/my.cnf
-  notify: reload_mysql
+        dest={{ item }}
+  with_items:
+    - /etc/my.cnf
+    - /usr/my.cnf
+    - /usr/my-new.cnf 
 
 - name: Make sure {{ scripts_dir }} is available
   file:
@@ -77,7 +75,7 @@
        state=present
 
 - name: install mysql shared-compat rpm file for mysql-python
-  yum: name={{ rpm_dir }}{{ mysql_rpm_shared_compat }}
+  yum: name=MySQL-python
        state=present
 
 - name: Create mysql data dirs
