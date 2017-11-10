@@ -15,7 +15,7 @@ sshd:
   X11Forwarding: no
 
 package_list:
-  - name: mysql-libs-5.1.71-1.el6.x86_64
+  - name: mysql-libs
     state: absent
   - name: dmidecode.x86_64
   - name: crontabs 
@@ -26,7 +26,6 @@ package_list:
   - name: mlocate 
   - name: telnet 
   - name: tar 
-  - name: MySQL-python 
 
 service_list:
   - name: crond 
@@ -55,6 +54,6 @@ disk_additional_disks:
    group: root 
    disable_periodic_fsck: false
 
-mysql_root_old_pass:  
-mysql_root_pass: root_passwd
-mysql_gm_pass: gm_passwd
+mysql_root_old_pass:
+mysql_root_pass: Abcd=2345
+mysql_gm_pass: 73Ii7Aqcy2
