@@ -55,5 +55,5 @@ disk_additional_disks:
    disable_periodic_fsck: false
 
 mysql_root_old_pass:
-mysql_root_pass: Abcd=2345
-mysql_gm_pass: 73Ii7Aqcy2
+mysql_root_pass: root_pass 
+mysql_gm_pass: gm_pass
