@@ -52,6 +52,12 @@
     minute: "*/30"
     job: /bin/bash /root/scripts/mysql_backup_binlog.sh > /tmp/mysql_binlog_backup.log 2>&1 
 
+- name: remove old  mysql 
+  yum: name={{item}}
+       state=absent
+  with_items:
+    - mysql-libs-5.1.73-8.el6_8.x86_64
+
 - name: install mysql client rpm file
   yum: name={{ rpm_dir }}{{ mysql_rpm_client }}
        state=present
@@ -64,6 +70,14 @@
   yum: name={{ rpm_dir }}{{ mysql_rpm_server }}
        state=present
 
+- name: install mysql shared rpm file
+  yum: name={{ rpm_dir }}{{ mysql_rpm_shared }}
+       state=present
+
+- name: install mysql shared-compat rpm file for mysql-python
+  yum: name=MySQL-python
+       state=present
+
 - name: Create mysql data dirs
   file: path={{item}}
         state=directory
@@ -71,20 +85,9 @@
         group=mysql
         mode=0755
   with_items:
+    - /data/mysql/data
     - /data/mysql/backup/baklogs
     - /var/lib/mysql
-
-- name: install mysql shared rpm file
-  yum: name={{ rpm_dir }}{{ mysql_rpm_shared }}
-       state=present
-
-- name: install mysql shared-compat rpm file for mysql-python
-  yum: name={{ rpm_dir }}{{ mysql_rpm_shared_compat }}
-       state=present
-
-- name: install mysql-python
-  yum: name=MySQL-python
-       state=present
 
 - name: Check that mysql init table is exist
   stat:
@@ -108,7 +111,7 @@
     delay: 1 
 
 - name: Set root user password
-  command: /root/scripts/mysql_ch_root_passwd.sh {{ mysql_root_pass }} {{ mysql_root_old_pass }} > /tmp/mysql_ch_root_passwd.txt 2>&1
+  command: /root/scripts/mysql_ch_root_passwd.sh {{ mysql_root_pass }} {{ mysql_root_old_pass }} 
 
 - name: add a backup user no password on localhost
   mysql_user: name=backup
@@ -127,7 +130,7 @@
               priv='*.*:SELECT,INSERT,UPDATE,DELETE'
               login_user=root
               login_password="{{ mysql_root_pass }}"
-              password="{{ mysql_gm_pass }}"
+              password="{{ mysql_gm_pass }}" 
               state=present
   with_items:
     - 127.0.0.1

@@ -6,11 +6,17 @@
 
 ### read new mysql password from command line
 new_dbpasswd="'$1'"
-old_dbpasswd="$2"
 
 ### if no password in command line ,use default password
 if [ -z $new_dbpasswd ];then
 	new_dbpasswd="'The9!NewPass'"
+fi
+
+### set old dbpasswd
+if [ -z $2 ];then
+	old_dbpasswd= ""
+else
+	old_dbpasswd=$2
 fi
 
 ### read mysql default installed password from ~/.mysql_secret or use new password
