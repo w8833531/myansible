@@ -1,3 +1,4 @@
 project_MHZS/group_vars/new.yml
+project_MHZS/hosts
 site.retry
 .gitignore

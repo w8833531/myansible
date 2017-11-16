@@ -1,7 +1,0 @@
-[new]
-#7k7k  ansible_ssh_host=10.135.151.196 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
-#51wan  ansible_ssh_host=10.104.70.226 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
-#xingdie ansible_ssh_host=10.104.189.113 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
-#360_1 ansible_ssh_host=10.135.66.15 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
-#360_2 ansible_ssh_host=10.135.182.57 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
-360_3 ansible_ssh_host=10.104.150.108 ansible_ssh_user=root ansible_ssh_pass=mhzs2017!
