@@ -12,6 +12,18 @@
     src: "{{ rpm_dir }}"
     dest: "{{ rpm_dir }}"
 
+- name: Check /game dir exist
+  stat:
+    path: /game
+  register: game_init
+
+- name: rsync /mhzs dir
+  copy:
+    src: /mhzs/init/
+    dest: /game/
+    mode: 0755
+  when: game_init.stat.exists == False
+
 - name: install java rpm file
   yum: name={{ rpm_dir }}{{ java_rpm_package }}
        state=present
@@ -26,3 +38,5 @@
     - 'export PATH=$JAVA_HOME/bin:$PATH'
     - 'export CLASSPATH=$JAVA_HOME/lib:$CLASSPATH'
     
+- name: start server843
+  command: sh /game/server843/start.sh 

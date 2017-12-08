@@ -124,7 +124,7 @@
 - name: add gm_user on 10.104.245.223
   mysql_user: name=gm_user
               host="{{ item }}"
-              priv='*.*:SELECT,INSERT,UPDATE,DELETE'
+              priv='*.*:SELECT,INSERT,UPDATE,DELETE,LOCK TABLES'
               login_user=root
               login_password="{{ mysql_root_pass }}"
               password="{{ mysql_gm_pass }}"
